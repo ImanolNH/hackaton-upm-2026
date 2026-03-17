@@ -1,6 +1,12 @@
 package hackatonScrumless;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "usuarios")
 public class Usuario {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nik;
     private String contrasena; // Evito la 'ñ' por compatibilidad de encoding, pero puedes usar contraseña
     private TipoDeVivienda vivienda;

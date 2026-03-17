@@ -1,4 +1,7 @@
 package hackatonScrumless;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,6 +37,19 @@ public class MainClass {
     }
 
     public static void main(String[] args) {
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        session.beginTransaction();
+
+        Usuario u = new Usuario();
+        u.setNik("Sergio");
+
+        session.persist(u);
+
+        session.getTransaction().commit();
+        session.close();
+        sessionFactory.close();
 
         // 1. Arrancar Spring Boot
         ConfigurableApplicationContext context =
