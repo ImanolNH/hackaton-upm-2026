@@ -1,16 +1,19 @@
 package hackatonScrumless;
 
+import javax.swing.*;
+
 public class InterfazBackoffice extends Interfaz{
 
     public void previsionMeteorologica(){
         WeatherResponse w = new WeatherResponse(weatherServi);
         super.previsionMeteorologica(w);
-        String prompt = String.format(
-                "Analiza: Lluvia %s, Viento %s, Presion %s. ¿Enviar alerta? Responde con: DECISION | NIVEL | RAZON",
-                w.getPrec(), w.getRacha(), w.getPresMin()
-        );
-        System.out.println( weatherServi.getRecomendacion("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJJbWFub2wiLCJleHAiOjE3NzM4MjI5MTR9.EjooIYhMX_BGpRTEZb8KSyoLSQoCezrgqobIpJ6pLMw",
-                "Eres un experto en riesgos naturales."+ prompt));
+        String prompt =
+                weatherServi.getRecomendacion("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJJbWFub2wiLCJleHAiOjE3NzM4MjI5MTR9.EjooIYhMX_BGpRTEZb8KSyoLSQoCezrgqobIpJ6pLMw",
+                        "Eres un experto en riesgos naturales dame una respuesta en menos de 30 palabras."+ String.format(
+                                "Analiza: Lluvia %s, Viento %s, Presion %s. ¿Enviar alerta? Responde con: DECISION | NIVEL | RAZON",
+                                w.getPrec(), w.getRacha(), w.getPresMin()
+                        ));
+        System.out.println(prompt);
 
 
     }

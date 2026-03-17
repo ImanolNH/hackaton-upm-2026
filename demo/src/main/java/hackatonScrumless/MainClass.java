@@ -67,7 +67,7 @@ public class MainClass {
         Usuario sesionActiva = null;
 
         String respuesta = "";
-        while (!respuesta.equalsIgnoreCase("exit")) {
+        while (sesionActiva==null) {
             System.out.println("\n1. Login | 2. Registro Ciudadano | 3. Registro Backoffice");
             respuesta = sc.nextLine();
 
@@ -76,7 +76,7 @@ public class MainClass {
                     sesionActiva = inicioSesion(sc, baseDatos);
                     break;
                     case "2":
-                        sesionActiva:registrarCiudadano(sc);
+                        sesionActiva=registrarCiudadano(sc);
                         baseDatos.add(sesionActiva);
                         break;
                     case "3":
@@ -169,10 +169,10 @@ public class MainClass {
         String prov = sc.nextLine();
 
         // Selección de Enums
-        System.out.println("Tipo de Vivienda (SOTANO, ATICO, NORMAL): ");
+        System.out.println("Tipo de Vivienda (SOTANO, PLANTA_BAJA,PISO_ALTO, CASA_DE_CAMPO): ");
         TipoDeVivienda vivienda = TipoDeVivienda.valueOf(sc.nextLine().toUpperCase());
 
-        System.out.println("Necesidades (NINGUNA, SILLA_DE_RUEDAS, ANCIANO): ");
+        System.out.println("Necesidades (NINGUNA, SILLA_DE_RUEDAS, MASCOTAS,PERSONA_DEPENDIENTE): ");
         NecesidadesEspeciales nec = NecesidadesEspeciales.valueOf(sc.nextLine().toUpperCase());
 
         System.out.println("✅ Ciudadano '" + nik + "' creado con éxito.");
