@@ -54,7 +54,7 @@ public class WeatherService {
 
             // 1. Crear el body JSON
             Map<String, String> body = new HashMap<>();
-            body.put("system_prompt", "Eres un asistente experto en meteorología.");
+            body.put("system_prompt", "Eres un asistente experto en meteorología que responde de manera concisa ante preguntas sobre tu disciplina.");
             body.put("user_prompt", pregunta);
 
             // 2. Cabeceras
