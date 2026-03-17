@@ -1,9 +1,188 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Mi página Java</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambio Climatico</title>
+    <style>
+        :root {
+            --upm-blue: #004481; --upm-accent: #0072ce; --upm-gold: #c5a847;
+            --success: #28a745; --danger: #dc3545; --bg: #f0f2f5;
+            --card: #ffffff; --text: #1c1e21; --border: #dee2e6;
+        }
+        body.dark-mode {
+            --bg: #18191a; --card: #242526; --text: #e4e6eb; --border: #3a3b3c;
+        }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; }
+
+        /* Estilos Pantalla de Login */
+        #auth-screen {
+            background: linear-gradient(135deg, var(--upm-blue) 0%, #002a4d 100%);
+            position: fixed; inset: 0; z-index: 2000; display: flex; justify-content: center; align-items: center;
+        }
+        .auth-card { background: white; padding: 2.5rem; border-radius: 20px; width: 100%; max-width: 420px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .login-logo { width: 180px; margin-bottom: 20px; border-radius: 10px; }
+
+        /* Dashboard Principal */
+        #main-dashboard { display: none; }
+        header { background: var(--upm-blue); color: white; padding: 0.8rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+
+        .container { max-width: 1300px; margin: 1.5rem auto; padding: 0 1rem; }
+        .grid-layout { display: grid; grid-template-columns: 280px 1fr 300px; gap: 20px; }
+        @media (max-width: 1000px) { .grid-layout { grid-template-columns: 1fr; } }
+
+        .card { background: var(--card); border-radius: 12px; padding: 20px; margin-bottom: 18px; border: 1px solid var(--border); }
+        .btn-action { background: var(--upm-blue); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; }
+        .btn-action:hover { opacity: 0.9; transform: scale(0.99); }
+
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid var(--border); border-radius: 6px; background: var(--card); color: var(--text); box-sizing: border-box; }
+        .badge { padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; }
+        .hidden { display: none; }
+
+        .reserva-item { border-left: 4px solid var(--upm-accent); padding: 12px; background: rgba(0, 114, 206, 0.05); margin-bottom: 10px; border-radius: 0 8px 8px 0; }
+    </style>
 </head>
 <body>
-<h1>Hola desde Java + Spring Boot</h1>
+
+<div id="auth-screen">
+    <div class="auth-card">
+        <h2 style="color:var(--upm-blue); margin-top:0;">Inicio de sesión Ciudadano</h2>
+        <div id="login-form">
+            <form action="/loginCiudadano" method="post">
+                <input type="text" name="nik" placeholder="Usuario">
+                <input type="password" name="contrasena" placeholder="Contraseña">
+                <button type="submit">Entrar</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div id="main-dashboard">
+    <header>
+        <div><strong>UPM-Arts</strong> <small>| "Ars longa, vita brevis"</small></div>
+        <div style="display:flex; gap:10px;">
+            <button onclick="document.body.classList.toggle('dark-mode')" class="btn-action" style="width:40px; padding:5px;">🌓</button>
+            <button onclick="location.reload()" style="background:var(--danger); border:none; color:white; padding:5px 15px; border-radius:5px; cursor:pointer;">Salir</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="grid-layout">
+
+            <aside>
+                <div class="card" style="text-align:center;">
+                    <div style="width:80px; height:80px; background:#eee; border-radius:50%; margin: 0 auto 15px; display:flex; align-items:center; justify-content:center; font-size:2rem; border:2px solid var(--upm-blue);">👤</div>
+                    <h3 id="profile-name">Usuario</h3>
+                    <span id="profile-role" class="badge" style="background:var(--upm-blue); color:white;">Rol</span>
+
+                    <div id="dto-box" class="card" style="margin-top:20px; background:#f8f9fa; border:1px dashed var(--upm-blue);">
+                        <strong>Descuento Aplicado:</strong>
+                        <div id="dto-value" style="font-size:1.5rem; color:var(--success); font-weight:bold;">25%</div>
+                    </div>
+                </div>
+            </aside>
+
+            <main>
+                <div id="view-admin" class="role-content hidden">
+                    <div class="card">
+                        <h3>Gestión de Inventario de Recursos</h3>
+                        <div class="reserva-item">🎹 Piano Steinway (SN: 2024-X1) - Aula M-01</div>
+                        <div class="reserva-item">📽️ Proyector 4K (SN: 2025-P2) - Auditorio</div>
+                        <button class="btn-action" style="width:auto; margin-top:10px;">+ Registrar Nuevo Equipo</button>
+                    </div>
+                    <div class="card">
+                        <h3>Gestión de Instructores</h3>
+                        <p>Alta de nuevos docentes y vinculación bancaria.</p>
+                        <button class="btn-action">Añadir Instructor</button>
+                    </div>
+                </div>
+
+                <div id="view-alumno" class="role-content hidden">
+                    <div class="card">
+                        <h3>Inscripción a Cursos Culturales</h3>
+                        <p><small>La inscripción se realiza por el bloque completo de sesiones.</small></p>
+                        <div class="reserva-item" style="border-color:var(--upm-gold)">
+                            <strong>Taller de Pintura al Óleo</strong><br>
+                            4 Sesiones | Martes y Jueves | Instructor: Asignado
+                            <button class="btn-action" style="margin-top:10px; background:var(--upm-gold)">Inscribirse al bloque</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Mis Asociaciones</h3>
+                        <p>Límite máximo: 3 asociaciones activas.</p>
+                        <button class="btn-action">+ Crear nueva Asociación</button>
+                    </div>
+                </div>
+
+                <div id="view-profe" class="role-content hidden">
+                    <div class="card">
+                        <h3>Honorarios e Ingresos</h3>
+                        <p>IBAN: ES21 **** **** 1234</p>
+                        <div class="reserva-item" style="background:none; border:1px solid #ddd">
+                            <strong>Liquidación Febrero 2026</strong><br>
+                            Total a percibir: 540,00€
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <aside>
+                <div class="card" style="background:var(--upm-blue); color:white;">
+                    <h4>Información LOPD</h4>
+                    <p style="font-size:0.8rem; opacity:0.9;">Sus datos personales están protegidos conforme a la LOPD-GDD y el Reglamento General de Protección de Datos.</p>
+                </div>
+                <div class="card">
+                    <h4>Reservas</h4>
+                    <p style="font-size:0.85rem;">Máximo 6 reservas activas de espacios.</p>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function detectarUPM() {
+        const val = document.getElementById('user-email').value;
+        document.getElementById('upm-status').style.display = val.includes('upm.es') ? 'block' : 'none';
+    }
+
+    function login() {
+        const user = document.getElementById('user-email').value.toLowerCase();
+
+        // Ocultar login y mostrar dashboard
+        document.getElementById('auth-screen').style.display = 'none';
+        document.getElementById('main-dashboard').style.display = 'block';
+
+        // Ocultar todas las vistas de rol
+        document.querySelectorAll('.role-content').forEach(c => c.classList.add('hidden'));
+
+        // Lógica de Diferenciación de Roles
+        const roleText = document.getElementById('profile-role');
+        const nameText = document.getElementById('profile-name');
+        const dtoBox = document.getElementById('dto-box');
+
+        if (user.includes('admin')) {
+            document.getElementById('view-admin').classList.remove('hidden');
+            roleText.innerText = "Administrador";
+            nameText.innerText = "Gestor Sistema";
+            dtoBox.classList.add('hidden');
+        }
+        else if (user.includes('profe')) {
+            document.getElementById('view-profe').classList.remove('hidden');
+            roleText.innerText = "Instructor";
+            nameText.innerText = "Prof. Martínez";
+            dtoBox.classList.add('hidden');
+        }
+        else {
+            document.getElementById('view-alumno').classList.remove('hidden');
+            roleText.innerText = "Alumno UPM";
+            nameText.innerText = "Alex Estudiante";
+            dtoBox.classList.remove('hidden');
+            document.getElementById('dto-value').innerText = "25%";
+        }
+    }
+</script>
 </body>
 </html>
