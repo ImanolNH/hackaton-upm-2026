@@ -86,59 +86,6 @@ public class MainClass {
                         break;
                 }
             }
-        if (sesionActiva != null) {
-            String opSesion = "";
-
-            // Bucle de sesión activa
-            while (!opSesion.equals("0")) {
-
-                if (sesionActiva instanceof Ciudadano) {
-                    // --- MENÚ PARA CIUDADANOS ---
-                    Ciudadano c = (Ciudadano) sesionActiva;
-                    System.out.println("\n--- MENÚ CIUDADANO (" + c.getNik() + ") ---");
-                    System.out.println("1. Ver Previsión y Recomendaciones IA");
-                    System.out.println("0. Cerrar Sesión");
-                    System.out.print("Selecciona: ");
-                    opSesion = sc.nextLine();
-
-                    if (opSesion.equals("1")) {
-                        InterfazCiudadano ic = new InterfazCiudadano();
-                        ic.previsionMeteorologica(c);
-                    }
-
-                } else if (sesionActiva instanceof Backoffice) {
-                    // --- MENÚ PARA BACKOFFICE ---
-                    Backoffice b = (Backoffice) sesionActiva;
-                    System.out.println("\n--- PANEL DE CONTROL BACKOFFICE (" + b.getNik() + ") ---");
-                    System.out.println("1. Análisis Técnico de Riesgos (IA)");
-                    System.out.println("2. Enviar Alerta Global");
-                    System.out.println("0. Cerrar Sesión");
-                    System.out.print("Selecciona: ");
-                    opSesion = sc.nextLine();
-
-                    InterfazBackoffice ib = new InterfazBackoffice();
-                    if (opSesion.equals("1")) {
-                        ib.previsionMeteorologica();
-                    } else if (opSesion.equals("2")) {
-                        System.out.print("Título de la alerta: ");
-                        String titulo = sc.nextLine();
-
-                        System.out.print("Mensaje detallado: ");
-                        String mensaje = sc.nextLine();
-
-                        System.out.print("Nivel (VERDE, AMARILLO, NARANJA, ROJO): ");
-                        NivelDeAlerta nivel = NivelDeAlerta.valueOf(sc.nextLine().toUpperCase());
-
-                        System.out.print("Zona afectada: ");
-                        String zona = sc.nextLine();
-
-                        // Llamamos al método encapsulado
-                        ib.crearAlerta(titulo, mensaje, nivel, zona);
-                    }
-                }
-            }
-            System.out.println("Cerrando sesión de " + sesionActiva.getNik() + "...");
-        }
 
 
 
@@ -190,6 +137,7 @@ public class MainClass {
         String codigo = sc.nextLine();
 
         System.out.println("⚠️ Administrador '" + nik + "' dado de alta en el sistema.");
+        // El constructor de Backoffice solo pide lo necesario
         return new Backoffice(nik, pass, codigo);
     }
 }
